@@ -17,7 +17,7 @@ st.title("Ask Kazuo GPT: ")
 chat = ChatOpenAI(temperature=0)
 
 # Get the user's message
-message = st.text_input("Enter your message:")
+message = st.text_input("Enter your question:")
 
 # Generate a response from GPT if the user has entered a message
 if message:
@@ -33,4 +33,4 @@ if message:
   #).choices[0].text
 
   #Display the response from GPT
-  st.write(f"Kazuo GPT's response: {search_query}")
+  st.write(search_query)
