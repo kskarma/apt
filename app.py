@@ -6,8 +6,8 @@ openai.api_key = "取得したAPIキー"
 
 st.title("GPT: ")
 
-#text = st.secrets["DB_KEY"]
-#st.write(text)
+text = st.secrets["DB_KEY"]
+st.write(text)
 
 # Get the user's message
 message = st.text_input("Enter your message:")
