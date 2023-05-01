@@ -45,6 +45,7 @@ f"問題：「{message}」")])
 
   # ChatGPTの出力は「＜検索ワード＞」となるはずなので、「」の中身を取り出す
   search_query = re.findall('「(.*?)」', f"{ret.content}")[0]
+  st.title(search_query)
   url_data = search_google(search_query) 
   st.title(url_data)
 
