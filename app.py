@@ -2,9 +2,9 @@ import openai
 import streamlit as st
 
 # Replace "YOUR_API_KEY" with your actual OpenAI API key
-openai.api_key = "取得したAPIキー"
+openai.api_key = st.secrets["DB_KEY"]
 
-st.title("GPT: ")
+st.title("Ask GPT: ")
 
 #text = st.secrets["DB_KEY"]
 #st.write(text)
