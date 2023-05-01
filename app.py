@@ -9,9 +9,6 @@ from llama_index.readers import BeautifulSoupWebReader
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage
 
-GOOGLE_API_KEY = st.secrets["G_A_KEY"]
-GOOGLE_CSE_ID = st.secrets["G_C_I"]
-
 # Replace "YOUR_API_KEY" with your actual OpenAI API key
 os.environ["OPENAI_API_KEY"] = st.secrets["DB_KEY"]
 
@@ -37,4 +34,4 @@ f"問題：「{message}」")])
 
   #Display the response from GPT
   answer = chat([HumanMessage(content=message)])
-  st.title(answer)
+  st.write(answer)
