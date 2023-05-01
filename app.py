@@ -1,42 +1,23 @@
-import os
-import streamlit as st
 import openai
-from os.path import join, dirname
-from dotenv import load_dotenv
+import streamlit as st
 
+# Replace "YOUR_API_KEY" with your actual OpenAI API key
+openai.api_key = "取得したAPIキー"
 
-# APIキーの設定
-load_dotenv(join(dirname(__file__), '.env'))
-openai.api_key = os.environ.get("API_KEY") 
+st.title("GPT3 Chatbot")
 
-# 「送信」ボタンがクリックされた場合に、OpenAIに問い合わせる
-def do_question():
-    question = st.session_state.question_input.strip()
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "user", "content": question},
-        ],
-    )
-    answer = response.choices[0]["message"]["content"].strip()
-    st.session_state.qa.append({"question":question,"answer":answer})
-    st.session_state.question_input = ""
+# Get the user's message
+message = st.text_input("Enter your message:")
 
-def main():
-    # セッションステートに qaリストを初期化する
-    if "qa" not in st.session_state:
-        st.session_state.qa = []
-
-    # テキストボックスで質問を入力
-    st.text_input("質問を入力してください", key="question_input")
-    # 送信ボタンがクリックするとOpenAIに問い合わせる
-    st.button("送信", on_click=do_question)
-
-    # リストをループして、質問と回答を表示
-    for qa in st.session_state.qa:
-        col1, col2 = st.columns(2)
-        col1.write(qa["question"])
-        col2.write(qa["answer"])
-
-if __name__ == "__main__":
-    main()        
+# Generate a response from GPT if the user has entered a message
+if message:
+  response = openai.Completion.create(
+    engine="text-davinci-002",
+    prompt=f"/japanese {message}",
+    max_tokens=1024,
+    n=1,
+    stop=None,
+    temperature=0.5,
+  ).choices[0].text
+  #Display the response from GPT
+  st.write(f"GPT response: {response}")
