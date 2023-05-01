@@ -4,7 +4,7 @@ import streamlit as st
 # Replace "YOUR_API_KEY" with your actual OpenAI API key
 openai.api_key = "取得したAPIキー"
 
-st.title("GPT3 Chatbot")
+st.title(st.secrets["DB_KEY"])
 
 # Get the user's message
 message = st.text_input("Enter your message:")
