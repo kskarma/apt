@@ -1,4 +1,6 @@
 import openai
+import os
+import re
 import streamlit as st
 from llama_index import LLMPredictor, ServiceContext
 from llama_index.readers import BeautifulSoupWebReader
@@ -6,7 +8,7 @@ from langchain.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage
 
 # Replace "YOUR_API_KEY" with your actual OpenAI API key
-openai.api_key = st.secrets["DB_KEY"]
+os.environ["OPENAI_API_KEY"] = st.secrets["DB_KEY"]
 
 st.title("Ask Kazuo GPT: ")
 
