@@ -9,8 +9,8 @@ from llama_index.readers import BeautifulSoupWebReader
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage
 
-GOOGLE_API_KEY = ""
-GOOGLE_CSE_ID = ""
+GOOGLE_API_KEY = st.secrets["G_A_KEY"]
+GOOGLE_CSE_ID = st.secrets["G_C_I"]
 
 def search_google(keyword, num=6) -> dict:
     """Google検索を行い、レスポンスを辞書で返す"""
