@@ -21,15 +21,7 @@ message = st.text_input("Enter your message:")
 
 # Generate a response from GPT if the user has entered a message
 if message:
-  ret = chat([HumanMessage(content="以下の例題にならって、知りたい情報を得るための適切な検索語句を3語以内で出力してください。\n"
-"例：「今年のWBCのMVPは誰ですか？」：「WBC 2023 MVP」\n"
-"例：「初代ポケットモンスターのゲームに登場するポケモンは何種類か知りたい。」：「初代 ポケモン 種類」\n"
-"例：「旭化成様が抱える経営課題を教えて。」：「旭化成 経営 課題」\n"
-"例：「Linuxで使えるコマンドとその意味を分かりやすくリストアップしてほしい」：「Linux コマンド 一覧」\n"
-f"問題：「{message}」")])
-
-  # ChatGPTの出力は「＜検索ワード＞」となるはずなので、「」の中身を取り出す
-  search_query = re.findall('「(.*?)」', f"{ret.content}")[0]
+  search_query = chat([HumanMessage(content=message)])
 
   #response = openai.Completion.create(
   #  engine="text-davinci-002",
@@ -39,5 +31,6 @@ f"問題：「{message}」")])
   #  stop=None,
   #  temperature=0.5,
   #).choices[0].text
+
   #Display the response from GPT
-  st.write(f"GPT response: {search_query}")
+  st.write(f"Kazuo GPT's response: {search_query}")
