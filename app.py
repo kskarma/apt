@@ -46,17 +46,6 @@ f"問題：「{message}」")])
   # ChatGPTの出力は「＜検索ワード＞」となるはずなので、「」の中身を取り出す
   search_query = re.findall('「(.*?)」', f"{ret.content}")[0]
   url_data = search_google(search_query) 
-  
-  # ブラックリスト
-  black_list_domain = [".pdf","note.com"]
-  def is_black(link): # 特定のリンクがブラックリストにあるかどうか
-    for l in black_list_domain:
-        if l in link:
-            return True
-    return False
-  
-  # スクレイピングできないサイトデータは除去
-  url_data = [data for data in url_data if not is_black(data["link"])]
 
   # URLのみ渡してスクレイピング
   documents = BeautifulSoupWebReader().load_data(urls=[data["link"] for data in url_data]) 
