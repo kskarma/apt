@@ -12,6 +12,23 @@ from langchain.schema import HumanMessage
 # Replace "YOUR_API_KEY" with your actual OpenAI API key
 os.environ["OPENAI_API_KEY"] = st.secrets["DB_KEY"]
 
+GOOGLE_API_KEY = st.secrets["G_A_KEY"]
+GOOGLE_CSE_ID = st.secrets["G_C_I"]
+
+def search_google(keyword, num=6) -> dict:
+    """Google検索を行い、レスポンスを辞書で返す"""
+    search_service = build("customsearch", "v1", developerKey=GOOGLE_API_KEY)
+    response = search_service.cse().list(
+                q=keyword,
+                cx=GOOGLE_CSE_ID,
+                lr='lang_ja',
+                num=num,
+                start=1
+            ).execute()
+    response_json = json.dumps(response, ensure_ascii=False, indent=4)
+
+st.title(GOOGLE_CSE_ID)
+    
 st.title("Ask Kazuo GPT: ")
 
 chat = ChatOpenAI(temperature=0)
