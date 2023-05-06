@@ -2,3 +2,6 @@ google-api-python-client
 langchain
 llama-index
 openai
+bs4
+requests
+urllib
