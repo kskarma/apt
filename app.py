@@ -32,6 +32,7 @@ st.title("Ask Kazuo GPT: ")
 
 chat = ChatOpenAI(temperature=0)
 
+"""
 url_data = search_google("自然言語処理") # 上位10件取得する
 print(f"Webページをまとめています...\n")
 # ブラックリスト
@@ -46,6 +47,7 @@ def is_black(link): # 特定のリンクがブラックリストにあるかど�
 url_data = [data for data in url_data if not is_black(data["link"])]
 for data in url_data:
   st.write(data["link"])
+"""
 
 # Get the user's message
 message = st.text_input("Enter your question:")
@@ -63,6 +65,67 @@ f"問題：「{message}」")])
   search_query = re.findall('「(.*?)」', f"{ret.content}")[0]
   st.title(search_query)
 
+  url_data = search_google(search_query) 
+  ### st.title(url_data)
+
+  # URLのみ渡してスクレイピング
+  documents = BeautifulSoupWebReader().load_data(urls=[data["link"] for data in url_data]) 
+
+  max_texts = 500
+  documents_text = ""
+  references = {}
+  black_list_text = ["JavaScript is not available.", "404", "403", "ページが見つか", "不適切なページ", "Server error"]
+  def is_black_text(text):
+    for bt in black_list_text:
+        if bt in text:
+            return True
+    return False
+
+  for i in range(len(url_data)):
+    if is_black_text(documents[i].text):
+        continue
+    # 余分な空白や改行を除去
+    text = documents[i].text.replace('\n', '').replace("  ", " ").replace("\t", "")
+    # テキストの最初の方はサイトのメニュー関連が多いので、テキストの一部だけを抽出するなど前処理をする
+    # text = text[len(text)//10:]
+    documents_text += f"【文献{i + 1}】{url_data[i]['snippet']}\n{text}"[:max_texts] + "\n"
+    references[f"文献{i + 1}"] = {
+        "title": url_data[i]['title'],
+        "link": url_data[i]['link']
+    }
+    if len(documents_text) > 3000:
+        documents_text = documents_text[:3000]
+        break
+  ret = chat([HumanMessage(content=f"以下の文献を要約して、下の質問に答えてください。\n"
+f"◆文献リスト\n{documents_text}\n"
+f"◆質問：{question}\n"
+f"◆回答する際の注意事項：文中に対応する参考文献の番号を【文献1】のように出力してください。"
+f"◆回答："
+)])
+
+  # ChatGPTの回答を格納
+  answer = ret.content
+  answer = answer.replace("。","。\n")
+
+  i = 0 # 参考文献の番号をリセット
+  add_ref_text = ""
+  for ref in references.keys():
+    if ref in answer:
+        i += 1
+        answer = answer.replace(f"【{ref}】", f"[{i}]")
+        answer = answer.replace(ref, f"[{i}]")
+        add_ref_text += f"[{i}] {references[ref]['title']}. {references[ref]['link']}.\n"
+
+  answer += f"\n【参考文献】\n{add_ref_text}"
+        
+  #response = openai.Completion.create(
+  #  engine="text-davinci-002",
+  #  prompt=f"/japanese {message}",
+  #  max_tokens=1024,
+  #  n=1,
+  #  stop=None,
+  #  temperature=0.5,
+  #).choices[0].text
+
   #Display the response from GPT
-  answer = chat([HumanMessage(content=message)])
   st.write(answer)
