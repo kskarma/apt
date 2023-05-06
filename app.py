@@ -2,7 +2,9 @@ import json
 import openai
 import os
 import re
+import requests
 import streamlit as st
+from bs4 import BeautifulSoup
 from googleapiclient.discovery import build
 from llama_index import LLMPredictor, ServiceContext
 from llama_index.readers import BeautifulSoupWebReader
