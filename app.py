@@ -32,23 +32,6 @@ st.title("Ask Kazuo GPT: ")
 
 chat = ChatOpenAI(temperature=0)
 
-"""
-url_data = search_google("自然言語処理") # 上位10件取得する
-print(f"Webページをまとめています...\n")
-# ブラックリスト
-black_list_domain = [".pdf","note.com"]
-def is_black(link): # 特定のリンクがブラックリストにあるかどうか
-    for l in black_list_domain:
-        if l in link:
-            return True
-    return False
-
-# スクレイピングできないサイトデータは除去
-url_data = [data for data in url_data if not is_black(data["link"])]
-for data in url_data:
-  st.write(data["link"])
-"""
-
 # Get the user's message
 message = st.text_input("Enter your question:")
 
