@@ -26,8 +26,6 @@ def search_google(keyword, num=6) -> dict:
                 start=1
             ).execute()
     response_json = json.dumps(response, ensure_ascii=False, indent=4)
-
-st.title(GOOGLE_CSE_ID)
     
 st.title("Ask Kazuo GPT: ")
 
