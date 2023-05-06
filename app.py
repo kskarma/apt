@@ -83,7 +83,7 @@ f"問題：「{message}」")])
         break
   ret = chat([HumanMessage(content=f"以下の文献を要約して、下の質問に答えてください。\n"
 f"◆文献リスト\n{documents_text}\n"
-f"◆質問：{question}\n"
+f"◆質問：{message}\n"
 f"◆回答する際の注意事項：文中に対応する参考文献の番号を【文献1】のように出力してください。"
 f"◆回答："
 )])
