@@ -52,9 +52,12 @@ f"問題：「{message}」")])
 
   url_data = search_google(search_query) 
   ### st.title(url_data)
+  st.write("WEBを検索しています。")
 
   # URLのみ渡してスクレイピング
   documents = BeautifulSoupWebReader().load_data(urls=[data["link"] for data in url_data]) 
+   
+  st.write("回答を生成しています。")
 
   max_texts = 500
   documents_text = ""
