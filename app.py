@@ -26,6 +26,7 @@ def search_google(keyword, num=6) -> dict:
                 start=1
             ).execute()
     response_json = json.dumps(response, ensure_ascii=False, indent=4)
+    return response["items"]
     
 st.title("Ask Kazuo GPT: ")
 
@@ -42,7 +43,7 @@ def is_black(link): # 特定のリンクがブラックリストにあるかど�
     return False
 
 # スクレイピングできないサイトデータは除去
-# url_data = [data for data in url_data if not is_black(data["link"])]
+url_data = [data for data in url_data if not is_black(data["link"])]
 for data in url_data:
   st.write(data["link"])
 
