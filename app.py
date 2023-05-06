@@ -30,7 +30,7 @@ def search_google(keyword, num=6) -> dict:
     response_json = json.dumps(response, ensure_ascii=False, indent=4)
     return response["items"]
     
-st.title("Ask Kazuo GPT: ")
+st.title("Ask Arima GPT: ")
 
 chat = ChatOpenAI(temperature=0)
 
