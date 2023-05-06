@@ -1,3 +1,4 @@
+beautifulsoup
 google-api-python-client
 langchain
 llama-index
