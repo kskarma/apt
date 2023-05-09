@@ -40,7 +40,6 @@ message = st.text_input("Enter your question:")
 
 # Generate a response from GPT if the user has entered a message
 if message:
-  logger.info('Process Start!')
   ret = chat([HumanMessage(content="以下の例題にならって、知りたい情報を得るための適切な検索語句を3語以内で出力してください。\n"
 "例：「今年のWBCのMVPは誰ですか？」：「WBC 2023 MVP」\n"
 "例：「初代ポケットモンスターのゲームに登場するポケモンは何種類か知りたい。」：「初代 ポケモン 種類」\n"
