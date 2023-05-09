@@ -11,12 +11,15 @@ from llama_index import LLMPredictor, ServiceContext
 from llama_index.readers import BeautifulSoupWebReader
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage
+from streamlit.logger import get_logger
 
 # Replace "YOUR_API_KEY" with your actual OpenAI API key
 os.environ["OPENAI_API_KEY"] = st.secrets["DB_KEY"]
 
 GOOGLE_API_KEY = st.secrets["G_A_KEY"]
 GOOGLE_CSE_ID = st.secrets["G_C_I"]
+
+logger = get_logger(__name__)
 
 def search_google(keyword, num=6) -> dict:
     """Google検索を行い、レスポンスを辞書で返す"""
@@ -40,6 +43,7 @@ message = st.text_input("Enter your question:")
 
 # Generate a response from GPT if the user has entered a message
 if message:
+  logger.info('Hello world')
   ret = chat([HumanMessage(content="以下の例題にならって、知りたい情報を得るための適切な検索語句を3語以内で出力してください。\n"
 "例：「今年のWBCのMVPは誰ですか？」：「WBC 2023 MVP」\n"
 "例：「初代ポケットモンスターのゲームに登場するポケモンは何種類か知りたい。」：「初代 ポケモン 種類」\n"
