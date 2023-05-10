@@ -33,7 +33,13 @@ def search_google(keyword, num=6) -> dict:
             ).execute()
     response_json = json.dumps(response, ensure_ascii=False, indent=4)
     return response["items"]
-    
+
+def is_black(link): # 特定のリンクがブラックリストにあるかどうか
+    for l in black_list_domain:
+        if l in link:
+          return True
+    return False
+
 st.title("Ask Arima GPT: ")
 
 chat = ChatOpenAI(temperature=0)
@@ -56,6 +62,11 @@ f"問題：「{message}」")])
   st.title(search_query)
 
   url_data = search_google(search_query) 
+  # ブラックリスト
+  black_list_domain = [".pdf","note.com","petitwedding.com"]
+  # スクレイピングできないサイトデータは除去
+  url_data = [data for data in url_data if not is_black(data["link"])]
+
   ### st.title(url_data)
   st.write("WEBを検索しています。")
 
