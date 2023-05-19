@@ -75,7 +75,7 @@ f"問題：「{message}」")])
    
   st.write("回答を生成しています。")
 
-  max_texts = 2000
+  max_texts = 600
   documents_text = ""
   references = {}
   black_list_text = ["JavaScript is not available.", "404", "403", "ページが見つか", "不適切なページ", "Server error"]
